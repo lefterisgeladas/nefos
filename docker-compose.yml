@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql+pymysql://nefos:nefos@db:3306/myfastdb
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: myfastdb
+      MYSQL_USER: nefos
+      MYSQL_PASSWORD: nefos
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
